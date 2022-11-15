@@ -24,6 +24,7 @@ public class UserPrincipal implements UserDetails {
 
         authorityList.add(authority);
 
+
         return authorityList;
     }
 
