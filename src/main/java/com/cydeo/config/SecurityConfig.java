@@ -1,5 +1,7 @@
 package com.cydeo.config;
 
+import com.cydeo.service.SecurityService;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,13 +12,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Configuration
+@AllArgsConstructor
 public class SecurityConfig {
+
+    private final SecurityService securityService;
+    private final AuthSuccessHandler authSuccessHandler;
 
 //    @Bean
 //    public UserDetailsService userDetailsService(PasswordEncoder encoder) {
@@ -86,9 +93,20 @@ public class SecurityConfig {
 //                .httpBasic()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/welcome")
+//                .defaultSuccessUrl("/welcome")
+                .successHandler(authSuccessHandler)
                 .failureUrl("/login?error=true")
                 .permitAll()
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login")
+                .and()
+                .rememberMe()
+                .tokenValiditySeconds(120)
+                .key("cydeo")
+                .userDetailsService(securityService) //to remember who
                 .and().build();
     }
 }
+

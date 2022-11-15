@@ -12,14 +12,15 @@ import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectMapper projectMapper;
@@ -28,6 +29,14 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final UserMapper userMapper;
     private final TaskService taskService;
+
+    public ProjectServiceImpl(ProjectMapper projectMapper, ProjectRepository projectRepository, UserService userService, UserMapper userMapper, TaskService taskService) {
+        this.projectMapper = projectMapper;
+        this.projectRepository = projectRepository;
+        this.userService = userService;
+        this.userMapper = userMapper;
+        this.taskService = taskService;
+    }
 
     @Override
     public ProjectDTO getByProjectCode(String code) {
@@ -92,7 +101,10 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public List<ProjectDTO> listAllProjectDetails() {
 
-        UserDTO currentUserDTO = userService.findByUserName("harold@manager.com"); // this will be coming from the security part when we implement
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+//        UserDTO currentUserDTO = userService.findByUserName("harold@manager.com"); // this will be coming from the security part when we implement
+        UserDTO currentUserDTO = userService.findByUserName(username); // this will be coming from the security part when we implement
 
         User user = userMapper.convertToEntity(currentUserDTO);
 
