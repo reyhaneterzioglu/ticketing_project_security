@@ -1,9 +1,12 @@
 package com.cydeo.entity;
 
+import com.cydeo.entity.common.UserPrincipal;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -43,6 +46,36 @@ public class BaseEntity {
 //    private void onPreUpdate() {
 //        this.lastUpdateDateTime = LocalDateTime.now();
 //        this.lastUpdateUserId = 1L;
+//    }
+
+//    @PrePersist
+//    private void onPrePersist() {
+//
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//        this.insertDateTime = LocalDateTime.now();
+//        this.lastUpdateDateTime = LocalDateTime.now();
+//
+//        if (authentication != null && !authentication.getName().equals("anonymousUser")) {
+//
+//            Object principal = authentication.getPrincipal();
+//
+//            insertUserId=((UserPrincipal) principal).getId();
+//            lastUpdateUserId=((UserPrincipal) principal).getId();
+//        }
+//    }
+//    @PreUpdate
+//    private void onPreUpdate() {
+//
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//        if (authentication != null && !authentication.getName().equals("anonymousUser")) {
+//
+//            Object principal = authentication.getPrincipal();
+//
+//            lastUpdateUserId=((UserPrincipal) principal).getId();
+//        }
+//
 //    }
 
 }

@@ -82,7 +82,6 @@ public class SecurityConfig {
 //                .antMatchers("/task/**").hasAnyRole("EMPLOYEE","ADMIN")
 //                .antMatchers("/task/**").hasAuthority("ROLE_EMPLOYEE")
                 .antMatchers(
-                        "/",
                         "/login",
                         "/fragments/**",
                         "/assets/**",
