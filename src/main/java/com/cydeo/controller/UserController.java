@@ -25,6 +25,7 @@ public class UserController {
     @GetMapping("/create")
     public String createUser(Model model){
 
+        model.addAttribute("loggedInUsername", userService.getLoggedInUsername());
         model.addAttribute("user", new UserDTO());
         model.addAttribute("roles", roleService.listAllRoles());
         model.addAttribute("users", userService.listAllUsers());
@@ -38,6 +39,7 @@ public class UserController {
 
         if (bindingResult.hasErrors()) {
 
+            model.addAttribute("loggedInUsername", userService.getLoggedInUsername());
             model.addAttribute("roles", roleService.listAllRoles());
             model.addAttribute("users", userService.listAllUsers());
 
@@ -54,6 +56,7 @@ public class UserController {
     @GetMapping("/update/{username}")
     public String editUser(@PathVariable("username") String username, Model model) {
 
+        model.addAttribute("loggedInUsername", userService.getLoggedInUsername());
         model.addAttribute("user", userService.findByUserName(username));
         model.addAttribute("roles", roleService.listAllRoles());
         model.addAttribute("users", userService.listAllUsers());
@@ -67,6 +70,7 @@ public class UserController {
 
         if (bindingResult.hasErrors()) {
 
+            model.addAttribute("loggedInUsername", userService.getLoggedInUsername());
             model.addAttribute("roles", roleService.listAllRoles());
             model.addAttribute("users", userService.listAllUsers());
 

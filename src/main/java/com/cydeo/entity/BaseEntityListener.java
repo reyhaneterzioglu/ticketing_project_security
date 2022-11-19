@@ -11,7 +11,7 @@ import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
 
 @Component
-public class BaseEntityListener extends AuditingEntityListener {
+public class BaseEntityListener extends AuditingEntityListener  {
 
     @PrePersist
     private void onPrePersist(BaseEntity baseEntity) {
@@ -43,7 +43,6 @@ public class BaseEntityListener extends AuditingEntityListener {
 
             baseEntity.setLastUpdateUserId(((UserPrincipal) principal).getId());
         }
-
     }
 
 }

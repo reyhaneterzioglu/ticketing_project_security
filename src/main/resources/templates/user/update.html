@@ -209,7 +209,8 @@
                                                 <td th:text="${user.role.description}"></td>
                                                 <td class="actions">
                                                     <a th:href="@{/user/update/{id}(id=${user.userName})}" class="btn btn-warning btn-sm">Update</a>
-                                                    <a th:href="@{/user/delete/{id}(id=${user.userName})}" class="delete-row btn btn-secondary btn-sm">Delete</a>
+                                                    <a th:if="${!loggedInUsername.equals(user.userName)}" th:href="@{/user/delete/{id}(id=${user.userName})}" class="delete-row btn btn-secondary btn-sm">Delete</a>
+                                                    <a th:if="${loggedInUsername.equals(user.userName)}" class="delete-row btn btn-secondary btn-sm disabled-button">Delete</a>
                                                 </td>
                                             </tr>
 

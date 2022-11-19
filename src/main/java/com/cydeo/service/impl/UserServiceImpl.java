@@ -10,6 +10,8 @@ import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -111,6 +113,10 @@ public class UserServiceImpl implements UserService {
 
     private boolean checkIfUserCanBeDeleted(User user) {
 
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        if (user.getUserName().equals(username)) return false;
+
         switch (user.getRole().getDescription()) {
 
             case "Manager":
@@ -124,6 +130,11 @@ public class UserServiceImpl implements UserService {
                 return true;
 
         }
-
     }
+
+    @Override
+    public String getLoggedInUsername(){
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
 }
